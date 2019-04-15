@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Seller extends Model
 {
    protected $guarded = [];
+   protected $hidden = ['password'];
 }
