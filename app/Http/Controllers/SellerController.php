@@ -35,5 +35,12 @@ class SellerController extends Controller
         }
     }
 
-
+    public function update(Seller $id)
+    {
+        $token=request()->get('api_token');
+        if(Seller::where('api_token', $token)->first()){
+            $id->update(request(['name', 'email']));
+            return $id;
+        }
+    }
 }
