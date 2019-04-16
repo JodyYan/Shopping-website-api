@@ -43,4 +43,14 @@ class SellerController extends Controller
             return $id;
         }
     }
+
+    public function logout()
+    {
+        $token=request()->get('api_token');
+        if($s=Seller::where('api_token', $token)->first()){
+            $s->api_token = null;
+            $s->save();
+            return 'already logout';
+        }
+    }
 }
