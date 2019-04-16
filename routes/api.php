@@ -19,3 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/seller', 'SellerController@store');
 Route::post('/seller/login', 'SellerController@login');
+Route::get('/seller/{id}', 'SellerController@show');

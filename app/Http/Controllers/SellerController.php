@@ -25,4 +25,15 @@ class SellerController extends Controller
         }
 
     }
+
+    public function show(Seller $id)
+    {
+        $token=request()->get('api_token');
+        if(Seller::where('api_token', $token)->first()){
+            $seller=Seller::findorfail($id)->first();
+            return ['name' => $seller->name, 'email' => $seller->email];
+        }
+    }
+
+
 }
