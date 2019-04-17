@@ -2,9 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Seller;
+use App\Product;
 
 class ProductController extends Controller
 {
-    //
+    public function store()
+    {
+        $token=request()->get('api_token');
+        if($s=Seller::where('api_token', $token)->first()){
+            $product=new Product();
+            $product->seller_id=$s->id;
+            $product->name=request('name');
+            $product->describe=request('describe');
+            $product->price=request('price');
+            $product->quantity=request('quantity');
+            if(request()->hasfile('image')) {
+                $file=request()->file('image');
+                $extension=$file->getClientOriginalExtension();
+                $filename='images/' . rand() . '.' . $extension;
+                $file->move(public_path("images"), $filename);
+                $product->image=$filename;
+            }
+            $product->save();
+            return $product;
+        }
+    }
 }

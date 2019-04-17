@@ -22,3 +22,4 @@ Route::post('/seller/login', 'SellerController@login');
 Route::get('/seller/{id}', 'SellerController@show');
 Route::patch('/seller/{id}', 'SellerController@update');
 Route::delete('/seller/logout', 'SellerController@logout');
+Route::post('/product', 'ProductController@store');
