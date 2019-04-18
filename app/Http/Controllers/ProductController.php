@@ -28,4 +28,13 @@ class ProductController extends Controller
             return $product;
         }
     }
+
+    public function index()
+    {
+        $token=request()->get('api_token');
+        if($seller=Seller::where('api_token', $token)->first()){
+            $product=Product::where('seller_id', $seller->id)->get();
+            return $product;
+        }
+    }
 }
