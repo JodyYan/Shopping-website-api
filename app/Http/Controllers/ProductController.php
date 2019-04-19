@@ -21,8 +21,8 @@ class ProductController extends Controller
             if(request()->hasfile('image')) {
                 $file=request()->file('image');
                 $extension=$file->getClientOriginalExtension();
-                $filename='images/' . rand() . '.' . $extension;
-                $file->move(public_path("images"), $filename);
+                $filename='storage/' . rand() . '.' . $extension;
+                $file->move(public_path("storage"), $filename);
                 $product->image=$filename;
             }
             $product->save();
