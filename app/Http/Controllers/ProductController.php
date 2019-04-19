@@ -59,4 +59,15 @@ class ProductController extends Controller
             }
         }
     }
+
+    public function destroy(Product $product)
+    {
+        $token=request()->get('api_token');
+        if($seller=Seller::where('api_token', $token)->first()){
+            if($product->seller_id==$seller->id){
+                $product->delete();
+                return 'ok';
+            }
+        }
+    }
 }
