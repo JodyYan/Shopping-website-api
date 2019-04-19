@@ -25,3 +25,4 @@ Route::delete('/seller/logout', 'SellerController@logout');
 Route::post('/product', 'ProductController@store');
 Route::get('/product', 'ProductController@index');
 Route::get('/product/specific', 'ProductController@show');
+Route::patch('/product/update/{product}', 'ProductController@update');

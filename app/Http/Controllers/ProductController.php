@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Seller;
 use App\Product;
 
@@ -45,6 +46,17 @@ class ProductController extends Controller
             $name=request()->get('name');
             $product=Product::where('seller_id', $seller->id)->where('name', 'LIKE', "%$name%")->get();
             return $product;
+        }
+    }
+
+    public function update(Request $request, Product $product)
+    {
+        $token=request()->get('api_token');
+        if($seller=Seller::where('api_token', $token)->first()){
+            if($product->seller_id==$seller->id){
+                $product->update(request()->except('api_token'));
+                return $product;
+            }
         }
     }
 }
