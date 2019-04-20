@@ -29,3 +29,4 @@ Route::patch('/product/update/{product}', 'ProductController@update');
 Route::delete('/product/delete/{product}', 'ProductController@destroy');
 Route::post('/buyer', 'BuyerController@store');
 Route::post('/buyer/login', 'BuyerController@login');
+Route::get('/buyer/{id}', 'BuyerController@show');

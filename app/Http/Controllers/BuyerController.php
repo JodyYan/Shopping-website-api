@@ -24,4 +24,14 @@ class BuyerController extends Controller
             return $buyer;
         }
     }
+
+    public function show(Buyer $id)
+    {
+        $token=request()->get('api_token');
+        if(Buyer::where('api_token', $token)->first()){
+            $buyer=Buyer::findorfail($id)->first();
+            return ['name' => $buyer->name , 'email' => $buyer->email];
+        }
+    }
+
 }
