@@ -34,4 +34,18 @@ class BuyerController extends Controller
         }
     }
 
+    public function update(Buyer $id)
+    {
+        $token=request()->get('api_token');
+        if(Buyer::where('api_token', $token)->first()){
+            if(request()->has(['name', 'email'])){
+                $id->update(request(['name', 'email']));
+                return $id;
+            }
+            if(request()->has('password')){
+                $id->update(request(['password']));
+                return 'ok';
+            }
+        }
+    }
 }
