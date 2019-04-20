@@ -48,4 +48,14 @@ class BuyerController extends Controller
             }
         }
     }
+
+    public function logout()
+    {
+        $token=request()->get('api_token');
+        if($buyer=Buyer::where('api_token', $token)->first()){
+            $buyer->api_token = null;
+            $buyer->save();
+            return 'already logout';
+        }
+    }
 }
