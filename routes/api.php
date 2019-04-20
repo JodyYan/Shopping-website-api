@@ -27,3 +27,4 @@ Route::get('/product', 'ProductController@index');
 Route::get('/product/specific', 'ProductController@show');
 Route::patch('/product/update/{product}', 'ProductController@update');
 Route::delete('/product/delete/{product}', 'ProductController@destroy');
+Route::post('/buyer', 'BuyerController@store');
