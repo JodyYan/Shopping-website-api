@@ -18,13 +18,13 @@ class CreateShoppingsTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('phone_number');
-            $table->string('adress');
-            $table->Integer('total_price');
+            $table->string('address');
+            $table->integer('total_price');
             $table->bigInteger('seller_id')->unsigned();
             $table->bigInteger('buyer_id')->unsigned();
-            $table->boolean('buyer_delete');
-            $table->boolean('seller_delete');
-            $table->Integer('status');
+            $table->boolean('buyer_delete')->default(false);
+            $table->boolean('seller_delete')->default(false);
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }
