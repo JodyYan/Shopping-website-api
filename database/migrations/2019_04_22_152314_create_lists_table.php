@@ -15,9 +15,8 @@ class CreateListsTable extends Migration
     {
         Schema::create('lists', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('product_name');
+            $table->bigInteger('product_id')->unsigned();
             $table->integer('quantity');
-            $table->integer('price');
             $table->bigInteger('shopping_id')->unsigned();
             $table->timestamps();
         });
