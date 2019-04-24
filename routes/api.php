@@ -26,6 +26,7 @@ Route::post('/product', 'ProductController@store');
 Route::get('/product', 'ProductController@index');
 Route::get('/product/specific', 'ProductController@show');
 Route::patch('/product/update/{product}', 'ProductController@update');
+Route::post('/shopping', 'ShoppingController@store');
 Route::delete('/product/delete/{product}', 'ProductController@destroy');
 Route::post('/buyer', 'BuyerController@store');
 Route::post('/buyer/login', 'BuyerController@login');
