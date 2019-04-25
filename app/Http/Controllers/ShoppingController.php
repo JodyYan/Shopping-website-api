@@ -54,4 +54,19 @@ class ShoppingController extends Controller
             }
         }
     }
+
+    public function index() {
+        $token=request()->get('api_token');
+        if ($buyer=Buyer::where('api_token', $token)->first()) {
+            $buyerId=$buyer->id;
+            $allList=Shopping::where('buyer_id', $buyerId)->get();
+            return $allList;
+        }
+
+        if ($seller=Seller::where('api_token', $token)->first()) {
+            $sellerId=$seller->id;
+            $allList=Shopping::where('seller_id', $sellerId)->get();
+            return $allList;
+        }
+    }
 }
