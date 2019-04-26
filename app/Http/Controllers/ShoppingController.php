@@ -90,4 +90,27 @@ class ShoppingController extends Controller
             }
         }
     }
+
+    public function destroy(Shopping $shopping) {
+        $token=request()->get('api_token');
+        $showList=Shoppinglist::where('shopping_id', $shopping->id)->get();
+        if ($buyer=Buyer::where('api_token', $token)->first()) {
+            $buyerDelete=request()->get('buyer_delete');
+            $shopping->buyer_delete=$buyerDelete;
+            $shopping->save();
+        }
+
+        if ($seller=Seller::where('api_token', $token)->first()) {
+            $sellerDelete=request()->get('seller_delete');
+            $shopping->seller_delete=$sellerDelete;
+            $shopping->save();
+        }
+
+        if ($shopping->buyer_delete == 1 && $shopping->seller_delete == 1) {
+            foreach ($showList as $deleteList) {
+                $deleteList->delete();
+            }
+            $shopping->delete();
+        }
+    }
 }

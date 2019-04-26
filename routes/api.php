@@ -35,3 +35,4 @@ Route::delete('/buyer/logout', 'BuyerController@logout');
 Route::post('/shopping', 'ShoppingController@store');
 Route::get('/shopping', 'ShoppingController@index');
 Route::get('/shopping/{shopping}', 'ShoppingController@show');
+Route::delete('shopping/{shopping}', 'ShoppingController@destroy');
