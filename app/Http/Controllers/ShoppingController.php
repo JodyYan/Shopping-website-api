@@ -113,4 +113,21 @@ class ShoppingController extends Controller
             $shopping->delete();
         }
     }
+
+    public function track(Shopping $shopping) {
+        $token=request()->get('api_token');
+        if ($seller=Seller::where('api_token', $token)->first()) {
+            $track=request()->get('status');
+            $shopping->status=$track;
+            $shopping->save();
+
+            if ($track==1) {return '訂單成立';}
+            if ($track==2) {return '確認付款';}
+            if ($track==3) {return '付款失敗';}
+            if ($track==4) {return '確認出貨';}
+            if ($track==5) {return '取貨完成';}
+            if ($track==6) {return '訂單完成';}
+            if (1>$track || 6<$track) {return '輸入錯誤';}
+        }
+    }
 }
