@@ -12,6 +12,13 @@ use Illuminate\Http\Request;
 class ShoppingController extends Controller
 {
     public function store(){
+        request()->validate([
+            'seller_id'=>['required','exists:sellers,id'],
+            'receiver_name'=>['required', 'max:20', 'string'],
+            'receiver_email'=>['required', 'max:255', 'email'],
+            'receiver_phone'=>['required', 'max:15', 'string'],
+            'address'=>['required', 'max:255','string']
+        ]);
         $total_price=0;
         $list=request()->get('list');
         $seller_id=request()->get('seller_id');
@@ -115,6 +122,9 @@ class ShoppingController extends Controller
     }
 
     public function track(Shopping $shopping) {
+        request()->validate([
+            'status'=>['required','integer']
+        ]);
         $token=request()->get('api_token');
         if ($seller=Seller::where('api_token', $token)->first()) {
             $track=request()->get('status');
