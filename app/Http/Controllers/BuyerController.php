@@ -4,17 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Str;
 use App\Buyer;
+use App\Http\Requests\Membership;
 use Illuminate\Http\Request;
 
 class BuyerController extends Controller
 {
-    public function store()
+    public function store(Membership $request)
     {
-        request()->validate([
-            'name'=>['required', 'max:20', 'string'],
-            'email'=>['required', 'max:255', 'email'],
-            'password'=>['required', 'max:30']
-        ]);
+        Buyer::create(request(['name', 'email', 'password']));
         return Buyer::create(request()->all());
     }
 
