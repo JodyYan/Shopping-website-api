@@ -10,6 +10,13 @@ class ProductController extends Controller
 {
     public function store()
     {
+        request()->validate([
+            'name'=>['required', 'max:20'],
+            'describe'=>['required', 'max:255'],
+            'price'=>['required', 'max:10', 'integer'],
+            'quantity'=>['required', 'max:10', 'integer'],
+            'image'=>['required', 'image']
+        ]);
         $token=request()->get('api_token');
         if($s=Seller::where('api_token', $token)->first()){
             $product=new Product();
@@ -51,6 +58,13 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
+        request()->validate([
+            'name'=>['required', 'max:20'],
+            'describe'=>['required', 'max:255'],
+            'price'=>['required', 'max:10', 'integer'],
+            'quantity'=>['required', 'max:10', 'integer'],
+            'image'=>['required', 'image']
+        ]);
         $token=request()->get('api_token');
         if($seller=Seller::where('api_token', $token)->first()){
             if($product->seller_id==$seller->id){
