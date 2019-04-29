@@ -10,6 +10,11 @@ class BuyerController extends Controller
 {
     public function store()
     {
+        request()->validate([
+            'name'=>['required', 'max:20', 'string'],
+            'email'=>['required', 'max:255', 'email'],
+            'password'=>['required', 'max:30']
+        ]);
         return Buyer::create(request()->all());
     }
 
@@ -36,6 +41,11 @@ class BuyerController extends Controller
 
     public function update(Buyer $id)
     {
+        request()->validate([
+            'name'=>['required', 'max:20', 'string'],
+            'email'=>['required', 'max:255', 'email'],
+            'password'=>['required', 'max:30']
+        ]);
         $token=request()->get('api_token');
         if(Buyer::where('api_token', $token)->first()){
             if(request()->has(['name', 'email'])){

@@ -10,6 +10,11 @@ class SellerController extends Controller
 {
     public function store()
     {
+        request()->validate([
+            'name'=>['required', 'max:20', 'string'],
+            'email'=>['required', 'max:255', 'email'],
+            'password'=>['required', 'max:30']
+        ]);
         return Seller::create(request()->all());
     }
 
@@ -37,11 +42,20 @@ class SellerController extends Controller
 
     public function update(Seller $id)
     {
+        request()->validate([
+            'name'=>['required', 'max:20', 'string'],
+            'email'=>['required', 'max:255', 'email'],
+            'password'=>['required', 'max:30']
+        ]);
         $token=request()->get('api_token');
-        if(Seller::where('api_token', $token)->first()){
+        if (Seller::where('api_token', $token)->first()){
             $id->update(request(['name', 'email']));
             return $id;
         }
+        if (request()->has('password')){
+                $id->update(request(['password']));
+                return 'ok';
+            }
     }
 
     public function logout()
