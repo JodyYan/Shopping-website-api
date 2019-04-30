@@ -8,17 +8,11 @@ use App\Buyer;
 use App\Shopping;
 use App\Shoppinglist;
 use Illuminate\Http\Request;
+use App\Http\Requests\Cart;
 
 class ShoppingController extends Controller
 {
-    public function store(){
-        request()->validate([
-            'seller_id'=>['required','exists:sellers,id'],
-            'receiver_name'=>['required', 'max:20', 'string'],
-            'receiver_email'=>['required', 'max:255', 'email'],
-            'receiver_phone'=>['required', 'max:15', 'string'],
-            'address'=>['required', 'max:255','string']
-        ]);
+    public function store(Cart $request){
         $total_price=0;
         $list=request()->get('list');
         $seller_id=request()->get('seller_id');
