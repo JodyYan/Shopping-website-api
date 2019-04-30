@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Seller;
 use App\Product;
-use App\Http\Request\ShoppingRequest;
+use App\Http\Requests\ShoppingRequest;
 
 class ProductController extends Controller
 {
     public function store(ShoppingRequest $request)
     {
-        Product::create(request(['name', 'describe', 'price', 'quantity', 'image']));
         $token=request()->get('api_token');
         if($s=Seller::where('api_token', $token)->first()){
             $product=new Product();
