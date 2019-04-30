@@ -11,7 +11,6 @@ class SellerController extends Controller
 {
     public function store(Membership $request)
     {
-        Seller::create(request(['name', 'email', 'password']));
         return Seller::create(request()->all());
     }
 
@@ -37,13 +36,8 @@ class SellerController extends Controller
         }
     }
 
-    public function update(Seller $id)
+    public function update(Seller $id, Membership $request)
     {
-        request()->validate([
-            'name'=>['required', 'max:20', 'string'],
-            'email'=>['required', 'max:255', 'email'],
-            'password'=>['required', 'max:30']
-        ]);
         $token=request()->get('api_token');
         if (Seller::where('api_token', $token)->first()){
             $id->update(request(['name', 'email']));
