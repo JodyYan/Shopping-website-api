@@ -9,6 +9,7 @@ use App\Shopping;
 use App\Shoppinglist;
 use Illuminate\Http\Request;
 use App\Http\Requests\Cart;
+use App\Http\Requests\Status;
 
 class ShoppingController extends Controller
 {
@@ -115,10 +116,7 @@ class ShoppingController extends Controller
         }
     }
 
-    public function track(Shopping $shopping) {
-        request()->validate([
-            'status'=>['required','integer']
-        ]);
+    public function track(Shopping $shopping, Status $request) {
         $token=request()->get('api_token');
         if ($seller=Seller::where('api_token', $token)->first()) {
             $track=request()->get('status');
@@ -131,7 +129,6 @@ class ShoppingController extends Controller
             if ($track==4) {return '確認出貨';}
             if ($track==5) {return '取貨完成';}
             if ($track==6) {return '訂單完成';}
-            if (1>$track || 6<$track) {return '輸入錯誤';}
         }
     }
 }
