@@ -29,34 +29,32 @@ class BuyerController extends Controller
     public function show(Buyer $id)
     {
         $token=request()->get('api_token');
-        if(Buyer::where('api_token', $token)->first()){
+        if($token===$id->api_token){
             $buyer=Buyer::findorfail($id)->first();
             return ['name' => $buyer->name , 'email' => $buyer->email];
         }
+        return 'id or api_token error';
     }
 
     public function update(Buyer $id, Membership $request)
     {
         $token=request()->get('api_token');
-        if(Buyer::where('api_token', $token)->first()){
-            if(request()->has(['name', 'email'])){
-                $id->update(request(['name', 'email']));
+        if($token===$id->api_token){
+            if(request()->has(['name', 'email', 'password'])){
+                $id->update(request(['name', 'email', 'password']));
                 return $id;
             }
-            if(request()->has('password')){
-                $id->update(request(['password']));
-                return 'ok';
-            }
         }
+        return 'id or api_token error';
     }
 
     public function logout()
     {
         $token=request()->get('api_token');
-        if($buyer=Buyer::where('api_token', $token)->first()){
-            $buyer->api_token = null;
-            $buyer->save();
-            return 'already logout';
-        }
+             if($buyer=Buyer::where('api_token', $token)->first()){
+                 $buyer->api_token = null;
+                 $buyer->save();
+                 return 'already logout';
+             }
     }
 }
