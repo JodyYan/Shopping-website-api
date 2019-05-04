@@ -40,14 +40,11 @@ class SellerController extends Controller
     public function update(Seller $id, Membership $request)
     {
         $token=request()->get('api_token');
-        if (Seller::where('api_token', $token)->first()){
-            $id->update(request(['name', 'email']));
+        if ($token===$id->api_token) {
+            $id->update(request(['name', 'email', 'password']));
             return $id;
         }
-        if (request()->has('password')){
-                $id->update(request(['password']));
-                return 'ok';
-            }
+         return 'id or api_token error';
     }
 
     public function logout()
