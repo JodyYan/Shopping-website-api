@@ -30,10 +30,11 @@ class SellerController extends Controller
     public function show(Seller $id)
     {
         $token=request()->get('api_token');
-        if(Seller::where('api_token', $token)->first()){
+        if ($token===$id->api_token) {
             $seller=Seller::findorfail($id)->first();
             return ['name' => $seller->name, 'email' => $seller->email];
         }
+        return 'id or api_token error';
     }
 
     public function update(Seller $id, Membership $request)

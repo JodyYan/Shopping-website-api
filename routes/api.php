@@ -19,9 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/seller', 'SellerController@store');
 Route::post('/seller/login', 'SellerController@login');
-Route::get('/seller/{id}', 'SellerController@show');
-Route::patch('/seller/{id}', 'SellerController@update');
-Route::delete('/seller/logout', 'SellerController@logout');
+Route::get('/seller/{id}', 'SellerController@show')->middleware('seller');
+Route::patch('/seller/{id}', 'SellerController@update')->middleware('seller');
+Route::delete('/seller/logout', 'SellerController@logout')->middleware('seller');
 Route::post('/product', 'ProductController@store');
 Route::get('/product', 'ProductController@index');
 Route::get('/product/specific', 'ProductController@show');
