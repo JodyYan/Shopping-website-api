@@ -55,6 +55,7 @@ class ShoppingController extends Controller
                 $shoppinglist->save();
             }
         }
+        return 'add successfully';
     }
 
     public function index() {
