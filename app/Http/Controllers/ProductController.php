@@ -55,8 +55,8 @@ class ProductController extends Controller
         request()->validate([
             'name'=>['required', 'max:20'],
             'describe'=>['required', 'max:255'],
-            'price'=>['required', 'max:10', 'integer'],
-            'quantity'=>['required', 'max:10', 'integer'],
+            'price'=>['required', 'integer'],
+            'quantity'=>['required', 'integer'],
             'image'=>['required', 'image']
         ]);
         $token=request()->get('api_token');
