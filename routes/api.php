@@ -37,4 +37,5 @@ Route::get('/shopping', 'ShoppingController@index')->middleware('buyer');
 Route::get('/shopping/{shopping}', 'ShoppingController@show')->middleware('buyer');
 Route::delete('/shopping/buyer/{shopping}', 'ShoppingController@buyerdestroy')->middleware('buyer');
 Route::delete('/shopping/seller/{shopping}', 'ShoppingController@sellerdestroy')->middleware('seller');
-Route::patch('shopping/track/{shopping}', 'ShoppingController@track')->middleware('seller');
+Route::patch('shopping/sellertrack/{shopping}', 'ShoppingController@sellertrack')->middleware('seller');
+Route::get('shopping/buyerTrack/{shopping}', 'ShoppingController@buyertrack')->middleware('buyer');

@@ -135,19 +135,33 @@ class ShoppingController extends Controller
         }
     }
 
-    public function track(Shopping $shopping, Status $request) {
+    public function sellertrack(Shopping $shopping, Status $request) {
         $token=request()->get('api_token');
-        if ($seller=Seller::where('api_token', $token)->first()) {
+        $seller=Seller::where('api_token', $token)->first();
+        if ($shopping->seller_id==$seller->id) {
             $track=request()->get('status');
             $shopping->status=$track;
             $shopping->save();
-
-            if ($track==1) {return '訂單成立';}
-            if ($track==2) {return '確認付款';}
-            if ($track==3) {return '付款失敗';}
-            if ($track==4) {return '確認出貨';}
-            if ($track==5) {return '取貨完成';}
-            if ($track==6) {return '訂單完成';}
+            return $this->trackStatus($track);
         }
+        return 'Use wrong token';
+    }
+
+    public function buyertrack(Shopping $shopping) {
+        $token=request()->get('api_token');
+        $buyer=Buyer::where('api_token', $token)->first();
+        if ($shopping->buyer_id==$buyer->id) {
+            $track=$shopping->status;
+            return $this->trackStatus($track);
+        }
+    }
+
+    private function trackStatus($track) {
+        if ($track==1) {return '訂單成立';}
+        if ($track==2) {return '確認付款';}
+        if ($track==3) {return '付款失敗';}
+        if ($track==4) {return '確認出貨';}
+        if ($track==5) {return '取貨完成';}
+        if ($track==6) {return '訂單完成';}
     }
 }
