@@ -98,15 +98,23 @@ class ShoppingController extends Controller
         $token=request()->get('api_token');
         $showList=Shoppinglist::where('shopping_id', $shopping->id)->get();
         if ($buyer=Buyer::where('api_token', $token)->first()) {
+            if ($buyer->id!==$shopping->buyer_id) {
+                return 'Use wrong buyer token';
+            }
             $buyerDelete=request()->get('buyer_delete');
             $shopping->buyer_delete=$buyerDelete;
             $shopping->save();
+            echo 'already change buyer_delete to ' . "$buyerDelete";
         }
 
         if ($seller=Seller::where('api_token', $token)->first()) {
+            if ($seller->id!==$shopping->seller_id) {
+                return 'Use wrong seller token';
+            }
             $sellerDelete=request()->get('seller_delete');
             $shopping->seller_delete=$sellerDelete;
             $shopping->save();
+            echo 'already change seller_delete to ' . "$sellerDelete";
         }
 
         if ($shopping->buyer_delete == 1 && $shopping->seller_delete == 1) {
@@ -114,6 +122,7 @@ class ShoppingController extends Controller
                 $deleteList->delete();
             }
             $shopping->delete();
+            return 'Successfully delete this order';
         }
     }
 
