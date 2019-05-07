@@ -104,8 +104,8 @@ class ShoppingController extends Controller
             $buyerDelete=request()->get('buyer_delete');
             $shopping->buyer_delete=$buyerDelete;
             $shopping->save();
-            $this->cancelDeal($shopping);
-            return 'already change buyer_delete to ' . "$buyerDelete" . "\n";
+            $cancel=$this->cancelDeal($shopping);
+            return 'already change buyer_delete to ' . "$buyerDelete" . "\n" . $cancel;
         }
     }
 
@@ -119,8 +119,8 @@ class ShoppingController extends Controller
             $sellerDelete=request()->get('seller_delete');
             $shopping->seller_delete=$sellerDelete;
             $shopping->save();
-            $this->cancelDeal($shopping);
-            return 'already change seller_delete to ' . "$sellerDelete" . "\n";
+            $cancel=$this->cancelDeal($shopping);
+            return 'already change seller_delete to ' . "$sellerDelete" . "\n" . $cancel;
         }
     }
 
