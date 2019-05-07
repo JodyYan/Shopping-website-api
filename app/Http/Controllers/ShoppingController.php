@@ -94,7 +94,7 @@ class ShoppingController extends Controller
         }
     }
 
-    public function destroy(Shopping $shopping) {
+    public function buyerdestroy(Shopping $shopping) {
         $token=request()->get('api_token');
         $showList=Shoppinglist::where('shopping_id', $shopping->id)->get();
         if ($buyer=Buyer::where('api_token', $token)->first()) {
@@ -104,9 +104,14 @@ class ShoppingController extends Controller
             $buyerDelete=request()->get('buyer_delete');
             $shopping->buyer_delete=$buyerDelete;
             $shopping->save();
-            echo 'already change buyer_delete to ' . "$buyerDelete";
+            $this->cancelDeal($shopping);
+            return 'already change buyer_delete to ' . "$buyerDelete" . "\n";
         }
+    }
 
+    public function sellerdestroy(Shopping $shopping) {
+        $token=request()->get('api_token');
+        $showList=Shoppinglist::where('shopping_id', $shopping->id)->get();
         if ($seller=Seller::where('api_token', $token)->first()) {
             if ($seller->id!==$shopping->seller_id) {
                 return 'Use wrong seller token';
@@ -114,9 +119,13 @@ class ShoppingController extends Controller
             $sellerDelete=request()->get('seller_delete');
             $shopping->seller_delete=$sellerDelete;
             $shopping->save();
-            echo 'already change seller_delete to ' . "$sellerDelete";
+            $this->cancelDeal($shopping);
+            return 'already change seller_delete to ' . "$sellerDelete" . "\n";
         }
+    }
 
+    private function cancelDeal(Shopping $shopping) {
+        $showList=Shoppinglist::where('shopping_id', $shopping->id)->get();
         if ($shopping->buyer_delete == 1 && $shopping->seller_delete == 1) {
             foreach ($showList as $deleteList) {
                 $deleteList->delete();
