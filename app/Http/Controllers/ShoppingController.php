@@ -58,7 +58,7 @@ class ShoppingController extends Controller
         return 'add successfully';
     }
 
-    public function index() {
+    public function buyerIndex() {
         $token=request()->get('api_token');
         if ($buyer=Buyer::where('api_token', $token)->first()) {
             $buyerId=$buyer->id;
@@ -66,6 +66,10 @@ class ShoppingController extends Controller
             return $allList;
         }
 
+    }
+
+    public function sellerIndex() {
+        $token=request()->get('api_token');
         if ($seller=Seller::where('api_token', $token)->first()) {
             $sellerId=$seller->id;
             $allList=Shopping::where('seller_id', $sellerId)->get();
