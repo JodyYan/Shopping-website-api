@@ -77,24 +77,30 @@ class ShoppingController extends Controller
         }
     }
 
-    public function show(Shopping $shopping) {
+    public function buyerShow(Shopping $shopping) {
         $token=request()->get('api_token');
         if ($buyer=Buyer::where('api_token', $token)->first()) {
             $bi=$buyer->id;
             $sbi=$shopping->buyer_id;
             $showList=Shoppinglist::where('shopping_id', $shopping->id)->get();
             if ($bi==$sbi) {
-                return $showList;
+                return ['List'=>$showList,'Ordering information'=>$shopping];
             }
+            return 'Use wrong token';
         }
 
+    }
+
+     public function sellerShow(Shopping $shopping) {
+        $token=request()->get('api_token');
         if ($seller=Seller::where('api_token', $token)->first()) {
             $si=$seller->id;
             $ssi=$shopping->seller_id;
             $showList=Shoppinglist::where('shopping_id', $shopping->id)->get();
             if ($si==$ssi) {
-                return $showList;
+                return ['List'=>$showList,'Ordering information'=>$shopping];
             }
+            return 'Use wrong token';
         }
     }
 
